@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ridge Rush X</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.js"></script>
+    <style>
+        :root {
+            --bg-top: #081b2f;
+            --bg-mid: #14385b;
+            --bg-bottom: #1a4f72;
+            --card: rgba(8, 28, 45, 0.72);
+            --line: rgba(162, 221, 255, 0.34);
+            --text: #e9f6ff;
+            --soft: #b8d2e8;
+            --accent: #f3b654;
+            --accent-2: #79d8c6;
+            --danger: #ff8f77;
+            --success: #9ce779;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            color: var(--text);
+            font-family: 'Sora', sans-serif;
+            background:
+                radial-gradient(circle at 18% 10%, rgba(121, 216, 198, 0.16), transparent 36%),
+                radial-gradient(circle at 84% 76%, rgba(243, 182, 84, 0.18), transparent 44%),
+                linear-gradient(165deg, var(--bg-top) 0%, var(--bg-mid) 42%, var(--bg-bottom) 100%);
+            padding: 18px;
+        }
+
+        .app-shell {
+            width: min(1340px, 100%);
+            margin: 0 auto;
+            display: grid;
+            gap: 14px;
+        }
+
+        .topbar {
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: var(--card);
+            backdrop-filter: blur(8px);
+            padding: 14px 20px;
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .brand h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 0.08em;
+            font-size: clamp(2rem, 4.2vw, 3.3rem);
+            line-height: 0.9;
+        }
+
+        .brand p {
+            color: var(--soft);
+            font-size: clamp(0.86rem, 1.25vw, 1.06rem);
+            margin-top: 6px;
+        }
+
+        .auth-corner {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+            min-width: 240px;
+        }
+
+        .user-pill {
+            border: 1px solid rgba(121, 216, 198, 0.5);
+            border-radius: 999px;
+            padding: 6px 7px 6px 14px;
+            color: var(--accent-2);
+            font-size: 0.88rem;
+            background: rgba(7, 41, 58, 0.55);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .panel {
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: var(--card);
+            backdrop-filter: blur(8px);
+            padding: 18px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        input {
+            background: rgba(6, 20, 34, 0.75);
+            border: 1px solid rgba(162, 221, 255, 0.34);
+            color: var(--text);
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-family: inherit;
+            font-size: 0.95rem;
+        }
+
+        input:focus {
+            border-color: var(--accent-2);
+            outline: none;
+        }
+
+        button {
+            border: none;
+            border-radius: 10px;
+            padding: 10px 13px;
+            font-family: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .primary-button {
+            background: linear-gradient(135deg, #f2b046, #ed7e3d);
+            color: #13202b;
+        }
+
+        .secondary-button {
+            background: rgba(121, 216, 198, 0.16);
+            border: 1px solid rgba(121, 216, 198, 0.45);
+            color: var(--text);
+        }
+
+        .danger-button {
+            background: rgba(255, 143, 119, 0.13);
+            border: 1px solid rgba(255, 143, 119, 0.45);
+            color: #ffd9d0;
+        }
+
+        .menu-panel {
+            display: grid;
+            gap: 16px;
+            justify-items: center;
+            text-align: center;
+        }
+
+        .menu-subnote {
+            color: var(--soft);
+            font-size: 0.92rem;
+        }
+
+        .menu-buttons {
+            width: min(820px, 100%);
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(2, minmax(220px, 1fr));
+        }
+
+        .menu-button {
+            min-height: 68px;
+            font-size: 1rem;
+            letter-spacing: 0.01em;
+        }
+
+        .stat-grid {
+            width: 100%;
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(4, minmax(120px, 1fr));
+        }
+
+        .stat-card {
+            text-align: left;
+            background: rgba(6, 24, 39, 0.66);
+            border: 1px solid rgba(162, 221, 255, 0.22);
+            border-radius: 14px;
+            padding: 12px;
+        }
+
+        .stat-card h3 {
+            color: var(--soft);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .stat-card p {
+            margin-top: 6px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.9rem;
+            letter-spacing: 0.02em;
+        }
+
+        .utility-row {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .account-benefits {
+            width: 100%;
+            border: 1px solid rgba(121, 216, 198, 0.34);
+            background: rgba(7, 35, 51, 0.56);
+            border-radius: 12px;
+            padding: 10px;
+            color: var(--soft);
+            font-size: 0.9rem;
+        }
+
+        .auth-form {
+            background: rgba(8, 20, 35, 0.6);
+            border: 1px solid rgba(162, 221, 255, 0.26);
+            border-radius: 16px;
+            padding: 16px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .auth-form h3 {
+            font-size: 1.1rem;
+        }
+
+        .auth-form p {
+            color: var(--soft);
+            font-size: 0.92rem;
+            margin-bottom: 4px;
+        }
+
+        .auth-form label {
+            display: grid;
+            gap: 6px;
+            font-size: 0.9rem;
+            color: var(--soft);
+            text-align: left;
+        }
+
+        .modal-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .mission-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .mission-item {
+            border: 1px solid rgba(162, 221, 255, 0.2);
+            border-radius: 10px;
+            padding: 10px;
+            background: rgba(3, 17, 30, 0.56);
+        }
+
+        .mission-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--soft);
+            margin-bottom: 6px;
+            gap: 12px;
+        }
+
+        .mission-progress {
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(83, 109, 135, 0.45);
+            overflow: hidden;
+        }
+
+        .mission-progress > span {
+            display: block;
+            height: 100%;
+            background: linear-gradient(90deg, #68d8af, #f3b654);
+            width: 0;
+        }
+
+        .settings-grid {
+            display: grid;
+            gap: 10px;
+        }
+
+        .setting-card {
+            border: 1px solid rgba(162, 221, 255, 0.24);
+            border-radius: 12px;
+            padding: 10px;
+            background: rgba(5, 20, 34, 0.6);
+            display: grid;
+            gap: 8px;
+        }
+
+        .setting-card p {
+            color: var(--soft);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .game-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        #game-status {
+            color: var(--soft);
+            font-size: 0.93rem;
+        }
+
+        #game-container {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            border-radius: 16px;
+            border: 2px solid rgba(162, 221, 255, 0.5);
+            background: #6fbce7;
+            box-shadow: 0 16px 54px rgba(0, 0, 0, 0.38);
+        }
+
+        #game-container canvas {
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .hint {
+            margin-top: 10px;
+            color: var(--soft);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(1, 9, 16, 0.7);
+            display: grid;
+            place-items: center;
+            padding: 18px;
+            z-index: 30;
+        }
+
+        .modal-card {
+            width: min(760px, 100%);
+            border-radius: 16px;
+            border: 1px solid var(--line);
+            background: rgba(10, 30, 48, 0.94);
+            max-height: 82vh;
+            overflow: hidden;
+            display: grid;
+            grid-template-rows: auto 1fr;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 14px;
+            border-bottom: 1px solid rgba(162, 221, 255, 0.2);
+        }
+
+        .modal-body {
+            padding: 14px;
+            overflow: auto;
+            display: grid;
+            gap: 10px;
+        }
+
+        .icon-button {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        .upgrade-card,
+        .board-row {
+            border: 1px solid rgba(162, 221, 255, 0.24);
+            border-radius: 12px;
+            padding: 10px;
+            background: rgba(5, 20, 34, 0.6);
+        }
+
+        .upgrade-top,
+        .board-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .upgrade-card h3 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .upgrade-card p {
+            color: var(--soft);
+            font-size: 0.86rem;
+            line-height: 1.35;
+        }
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 20px;
+            transform: translateX(-50%) translateY(120%);
+            transition: transform 0.28s ease;
+            border: 1px solid rgba(162, 221, 255, 0.38);
+            border-radius: 999px;
+            background: rgba(7, 27, 43, 0.95);
+            color: var(--text);
+            padding: 10px 16px;
+            z-index: 40;
+            font-size: 0.9rem;
+            max-width: min(86vw, 700px);
+            text-align: center;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @media (max-width: 980px) {
+            .stat-grid {
+                grid-template-columns: repeat(2, minmax(120px, 1fr));
+            }
+
+            body {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .menu-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .auth-corner {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 580px) {
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .mission-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="app-shell">
+        <header class="topbar">
+            <div class="brand">
+                <h1>RIDGE RUSH X</h1>
+                <p>Career racing with progression, missions, upgrades, and online leaderboard.</p>
+            </div>
+            <div class="auth-corner">
+                <button id="auth-signin-btn" class="secondary-button" type="button">Sign In</button>
+                <div id="user-pill" class="user-pill hidden">
+                    <span id="auth-user-meta"></span>
+                    <button id="logout-btn" class="danger-button" type="button">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <section id="lobby-view" class="panel menu-panel">
+            <p id="profile-mode-label" class="menu-subnote">Guest profile active | progress is saved locally</p>
+
+            <div class="menu-buttons">
+                <button id="startButton" class="menu-button primary-button" type="button">Start Game</button>
+                <button id="garage-btn" class="menu-button secondary-button" type="button">Garage / Upgrades</button>
+                <button id="missions-btn" class="menu-button secondary-button" type="button">Missions / Career</button>
+                <button id="settings-btn" class="menu-button secondary-button" type="button">Settings</button>
+            </div>
+
+            <div class="stat-grid">
+                <article class="stat-card">
+                    <h3>Coins</h3>
+                    <p id="stat-coins">0</p>
+                </article>
+                <article class="stat-card">
+                    <h3>Best Distance</h3>
+                    <p id="stat-best">0m</p>
+                </article>
+                <article class="stat-card">
+                    <h3>Level</h3>
+                    <p id="stat-level">1</p>
+                </article>
+                <article class="stat-card">
+                    <h3>Total Runs</h3>
+                    <p id="stat-runs">0</p>
+                </article>
+            </div>
+
+            <div class="utility-row">
+                <button id="leaderboard-btn" class="secondary-button" type="button">Leaderboard</button>
+                <button id="daily-btn" class="secondary-button" type="button">Claim Daily Reward</button>
+            </div>
+
+            <p id="account-benefits-note" class="account-benefits">
+                Sign in to sync coins, upgrades, and XP across sessions, unlock leaderboard ranking, and save career progress permanently.
+            </p>
+        </section>
+
+        <section id="game-view" class="panel hidden">
+            <div class="game-toolbar">
+                <button id="back-lobby-btn" class="secondary-button" type="button">Back To Menu</button>
+                <div id="game-status">Race not started.</div>
+            </div>
+
+            <div id="game-container" role="application" aria-label="Ridge Rush racing game"></div>
+            <p class="hint">
+                Tap the game canvas once if keyboard input does not react immediately. Right = accelerate, Left = reverse,
+                Up = high jump, Down = push down.
+            </p>
+        </section>
+    </main>
+
+    <div id="modal-overlay" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2 id="modal-title">Panel</h2>
+                <button id="modal-close" class="icon-button" type="button">X</button>
+            </div>
+            <div id="modal-body" class="modal-body"></div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <script src="game.js?v=20260418-25"></script>
+</body>
+</html>
