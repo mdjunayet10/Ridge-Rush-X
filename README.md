@@ -1,6 +1,6 @@
 # Ridge Rush X
 
-Ridge Rush X is a cross-platform, full-stack racing web game with account login, profile progression, garage upgrades, and leaderboard tracking.
+Ridge Rush  is a cross-platform, full-stack racing web game with account login, profile progression, garage upgrades, and leaderboard tracking.
 
 ## Main Features
 
