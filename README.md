@@ -59,3 +59,7 @@ Touch controls are also available in-game.
 
 - Database file: `ridge_rush.db` (auto-created).
 - Tables: `users`, `sessions`, `runs`.
+
+## Owner 
+
+- Md Junayet
