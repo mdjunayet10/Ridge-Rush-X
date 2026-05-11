@@ -1,65 +1,42 @@
-# Ridge Rush X
+# Hill Rider
 
-Ridge Rush X is a cross-platform, full-stack racing web game with account login, profile progression, garage upgrades, and leaderboard tracking.
+Hill Rider is an original golden mountain hill-racing game built with Flutter and Flame. The current direction is **Golden Mountain Day Ride**: warm readable peaks, dusty cartoon terrain, fair fuel stops, gold coins, selectable stages, and simple side-view vehicles with visible drivers and riders.
 
-## Main Features
+## Features
 
-- Account system with register, login, logout, and persistent session cookies.
-- Backend profile storage (SQLite) for coins, level, XP, upgrades, and run history.
-- Garage upgrade system:
-   - Engine
-   - Fuel Tank
-   - Grip
-   - Turbo
-- Daily reward claim flow.
-- Leaderboard API and UI panel.
-- Mission board with progress tracking.
-- Physics-based bike with separate frame and wheels.
-- Procedural terrain with pickups and hazards.
-- Gameplay systems:
-   - Fuel + boost + health
-   - Checkpoints
-   - Stunt rewards
-   - Rival pace meter
-   - Weather variation
+- Custom arcade car physics with grounded and airborne behavior
+- Front and rear wheel terrain contact sampling
+- Procedural mountain stages with ramps, dips, rough shelves, climbs, and reward routes
+- Fuel cells, coins, gems, crash/game-over flow, stage stars, and best-distance saving
+- Garage upgrades for Engine Core, Grip Tires, Shock System, and Fuel Cell
+- Original eight-vehicle roster with buggies, trucks, a motorbike, an ATV, stats, and unlock costs
+- Selectable stage cards with coin unlocks, distinct palettes, and saved star progress
+- Clean HUD with coins, distance, fuel, home, and pedal controls
+- Premium responsive menus, HUD, garage showroom, player settings, and run results
+- Touch controls built around two large pedals: BRAKE on the left and GAS on the right
+- Short sound effects for buttons, engine ticks, skid, coins, fuel, crash, jump, and landing
 
-## Controls
+## Audio Rule
 
-- `Up` / `W`: Higher jump
-- `Down` / `S`: Push vehicle downward
-- `Left` / `A`: Reverse
-- `Right` / `D`: Accelerate
+Hill Rider intentionally does not include background music, menu music, theme music, looping music, or any musical soundtrack. Only short original sound effects are allowed.
 
-Touch controls are also available in-game.
+## Run
 
-## Platform Policy
+```sh
+flutter clean
+flutter pub get
+flutter run -d chrome
+flutter run -d chrome --release
+```
 
-- Frontend uses HTML, CSS, and JavaScript and runs in the browser.
-- Backend uses Python Flask APIs.
-- No OS-specific application bundles or binaries are used (`.app`, `.exe`, etc.).
-- Run via localhost in any operating system browser.
+## Development Checks
 
-## Run The Project
+```sh
+dart format .
+flutter analyze
+flutter test
+```
 
-1. Install dependencies:
-   - `pip install -r requirements.txt`
-2. Start the server:
-   - `python3 app.py`
-   - or `./run.sh` on Unix-like shells
-3. Open the localhost URL printed in the terminal (for example `http://127.0.0.1:8000`).
+## Targets
 
-## Project Structure
-
-- `app.py`: Flask API backend + static file server + SQLite persistence.
-- `index.html`: Frontend shell and UI layout.
-- `game.js`: UI controller, API integration, and Phaser game logic.
-- `requirements.txt`: Python backend dependencies.
-
-## Storage
-
-- Database file: `ridge_rush.db` (auto-created).
-- Tables: `users`, `sessions`, `runs`.
-
-## Owner 
-
-- Md Junayet
+The primary target is Flutter Web. Android/mobile is a secondary target. The code is platform-independent and does not rely on macOS-only APIs.
