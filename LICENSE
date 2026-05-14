@@ -1,21 +1,31 @@
-MIT License
+PROPRIETARY SOFTWARE LICENSE
 
 Copyright (c) 2026 Md. Junayet Hossain Mohit
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+All Rights Reserved.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+This software, including but not limited to source code, object code, builds,
+assets, designs, user interface, artwork, audio, documentation, screenshots,
+and related files (collectively, the "Software"), is the exclusive property of
+Md. Junayet Hossain Mohit.
+
+No permission is granted to any person or entity to use, copy, modify, merge,
+publish, distribute, sublicense, sell, reverse engineer, decompile, create
+derivative works from, or otherwise exploit the Software, in whole or in part,
+without prior written permission from the copyright holder.
+
+Viewing, accessing, or downloading this repository or any part of the Software
+does not grant any license, ownership, or usage rights.
+
+The Software is provided only for private review, demonstration, or authorized
+use by the copyright holder.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, OR AVAILABILITY. IN NO
+EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER
+LIABILITY ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+OR OTHER DEALINGS IN THE SOFTWARE.
+
+Third-party libraries, tools, frameworks, or dependencies included with or used
+by the Software remain subject to their own respective licenses.
