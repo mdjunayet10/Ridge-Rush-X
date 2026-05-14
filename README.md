@@ -142,7 +142,7 @@ build/
 
 ## License
 
-This project is licensed under the **MIT License**.
+This project is licensed under the **Proprietary — All Rights Reserved**.
 
 See the [`LICENSE`](LICENSE) file for details.
 
